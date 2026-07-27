@@ -1,0 +1,59 @@
+[project]
+name = "ml4t-packt-workshop"
+version = "1.0.0"
+description = "Machine Learning for Trading in the Age of AI Agents — Packt book-launch workshop, Sat Aug 15 2026"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "yfinance>=0.2.40",
+    "lightgbm>=4.5",
+    "xgboost>=2.1",
+    "scikit-learn>=1.5",
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "matplotlib>=3.9",
+    "seaborn>=0.13",
+    "scipy>=1.13",
+    "polars>=1.9",
+    "pyarrow>=17.0",
+    "jupyter>=1.1",
+    "ml4t-engineer>=0.1.0b10",
+    "ml4t-diagnostic>=0.1.0b25",
+    "ml4t-backtest>=0.1.0b22",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "ty",
+    "pre-commit",
+    "jupytext",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["E501", "B905"]
+
+[tool.ruff.lint.per-file-ignores]
+"*.ipynb" = ["E402", "B007", "B023", "B018"]
+"notebooks/*.py" = ["E402", "B007", "B023", "B018"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ty.environment]
+python-version = "3.12"
+
+[tool.ty.rules]
+no-matching-overload = "ignore"
+
+[[tool.ty.overrides]]
+include = ["**/*.ipynb"]
+[tool.ty.overrides.rules]
+unresolved-attribute = "ignore"
+unresolved-import = "ignore"

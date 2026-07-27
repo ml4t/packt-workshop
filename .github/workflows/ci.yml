@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-and-execute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+
+      - name: Sync environment
+        run: uv sync --dev
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Execute notebooks (fail on any cell error)
+        run: |
+          for nb in notebooks/*.ipynb; do
+            echo "=== $nb ==="
+            uv run jupyter nbconvert --to notebook --execute --stdout "$nb" > /dev/null
+          done
