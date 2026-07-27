@@ -14,8 +14,8 @@
 # # 03 · Training and evaluating the model
 #
 # **Supports agenda block 6** ("Training & Evaluating the Model"). LightGBM
-# with walk-forward cross-validation — never a random shuffle-split, which
-# would train on the future and validate on the past — and the
+# with walk-forward cross-validation - never a random shuffle-split, which
+# would train on the future and validate on the past - and the
 # **Information Coefficient (IC)**, HAC-corrected for the autocorrelation
 # that a 21-day-overlapping label mechanically introduces, as the metric
 # that actually says whether the model found anything.
@@ -27,7 +27,7 @@ from ml4t.diagnostic.metrics import compute_ic_hac_stats, cross_sectional_ic_ser
 from ml4t.diagnostic.splitters import WalkForwardCV
 
 DATA_DIR = "../data"
-LABEL_HORIZON = 21  # trading days — must match the label built in 02_features_labels
+LABEL_HORIZON = 21  # trading days - must match the label built in 02_features_labels
 
 dataset = pd.read_parquet(f"{DATA_DIR}/model_dataset.parquet")
 feature_cols = [
@@ -48,7 +48,7 @@ X, y = dataset[feature_cols], dataset["fwd_ret_21d"]
 # %% [markdown]
 # ## Walk-forward cross-validation
 #
-# `label_horizon=21` is the load-bearing argument here — it tells the
+# `label_horizon=21` is the load-bearing argument here - it tells the
 # splitter that a training row's label is only *fully known* 21 trading
 # days after its feature date, so it purges the training rows whose label
 # window would otherwise overlap the validation period. Skip this argument
@@ -97,7 +97,7 @@ for fold, (train_idx, test_idx) in enumerate(cv.split(X)):
 # ## The Information Coefficient
 #
 # Every prediction above came from a fold where the model never saw that
-# period during training — this is out-of-sample by construction, not by
+# period during training - this is out-of-sample by construction, not by
 # promise. We pool all four test folds and compute the cross-sectional
 # Spearman IC per date, then HAC-correct the resulting t-statistic.
 
@@ -120,7 +120,7 @@ hac_stats = compute_ic_hac_stats(ic_series, ic_col="ic", label_horizon=LABEL_HOR
 print(hac_stats)
 
 # %% [markdown]
-# `hac_stats["mean_ic"]` is the honest headline number — not the naive
+# `hac_stats["mean_ic"]` is the honest headline number - not the naive
 # t-statistic you'd get from treating each daily IC observation as
 # independent. Because the label is a 21-day forward return, consecutive
 # daily ICs share ~20 days of the same underlying return window and are
@@ -130,7 +130,7 @@ print(hac_stats)
 #
 # **Run this notebook and the two t-stats disagree with each other**: naive
 # ≈ 2.18 (nominally "significant" at 5%), HAC ≈ 0.65 (nowhere close). That
-# gap *is* the lesson, not a bug to fix — eight simple technical features
+# gap *is* the lesson, not a bug to fix - eight simple technical features
 # on a monthly-rebalanced ETF panel do not reliably beat noise once the
 # autocorrelation induced by the overlapping 21-day label is priced in.
 # A model with an IC this weak has no business going anywhere near a
@@ -142,7 +142,7 @@ print(hac_stats)
 #
 # Cheap to compute, easy to over-read. Treat this as "what the last fold's
 # model leaned on," not as a causal or stable ranking across the full
-# 18-year history — `13_model_analysis.py` in the full case study goes much
+# 18-year history - `13_model_analysis.py` in the full case study goes much
 # further (SHAP, permutation importance, stability across folds) than this
 # workshop has time for.
 
@@ -151,7 +151,7 @@ importance = pd.Series(model.feature_importances_, index=feature_cols).sort_valu
 print(importance)
 
 # %% [markdown]
-# **Next:** `04_backtest.ipynb` — turn these predictions into positions and
+# **Next:** `04_backtest.ipynb` - turn these predictions into positions and
 # run a cost-aware backtest. Save the pooled out-of-sample predictions so
 # the backtest notebook doesn't need to retrain anything.
 

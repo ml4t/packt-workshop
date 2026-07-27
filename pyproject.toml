@@ -1,7 +1,7 @@
 [project]
 name = "ml4t-packt-workshop"
 version = "1.0.0"
-description = "Machine Learning for Trading in the Age of AI Agents — Packt book-launch workshop, Sat Aug 15 2026"
+description = "Machine Learning for Trading in the Age of AI Agents - Packt book-launch workshop, Sat Aug 15 2026"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

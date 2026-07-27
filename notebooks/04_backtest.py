@@ -11,17 +11,17 @@
 # ---
 
 # %% [markdown]
-# # 04 · Backtesting the strategy — with real costs
+# # 04 · Backtesting the strategy - with real costs
 #
 # **Supports agenda block 7** ("Backtesting the Strategy") and sets up
 # block 9 ("Where to Go Next... why most backtests break"). We turn the
 # out-of-sample predictions from `03_model_training` into a monthly
 # top-N, equal-weight ETF portfolio and run it through `ml4t-backtest`'s
-# event-driven engine — **with commissions and slippage switched on
+# event-driven engine - **with commissions and slippage switched on
 # explicitly**.
 #
 # That last clause is not boilerplate. `BacktestConfig` defaults
-# `commission_type` and `slippage_type` to `NONE` — a config that *sets*
+# `commission_type` and `slippage_type` to `NONE` - a config that *sets*
 # `commission_rate`/`slippage_rate` without also setting the corresponding
 # `*_type` field runs at **zero cost**, silently. It's an easy mistake to
 # make (and one worth checking for explicitly if you ever hand this brief
@@ -52,7 +52,7 @@ prices["timestamp"] = pd.to_datetime(prices["timestamp"])
 oos = pd.read_parquet(f"{DATA_DIR}/oos_predictions.parquet")
 oos["timestamp"] = pd.to_datetime(oos["timestamp"]).dt.tz_localize(None)
 
-# The engine wants prices covering exactly the OOS prediction window —
+# The engine wants prices covering exactly the OOS prediction window -
 # trading on dates the model never produced a signal for isn't meaningful.
 prices = prices[
     (prices["timestamp"] >= oos["timestamp"].min())
@@ -68,13 +68,13 @@ print(f"backtest window: {prices['timestamp'].min().date()} -> {prices['timestam
 print(f"{prices_pl.height:,} price rows, {signals_pl.height:,} signal rows")
 
 # %% [markdown]
-# ## The cost model — matches the book's own ETF case study
+# ## The cost model - matches the book's own ETF case study
 #
 # `$0.0035`/share commission and tiered half-spread slippage are the same
 # numbers the case study's `config/setup.yaml` uses (`per_share_plus_spread`,
 # IBKR Pro tiered pricing). We use the real numbers rather than a round
 # "50 bps" placeholder, because the point of this block is that the *shape*
-# of a realistic cost model — fixed-plus-spread, not a flat percentage —
+# of a realistic cost model - fixed-plus-spread, not a flat percentage -
 # changes which trades are worth making at all, especially for the
 # less-liquid names in a 100-ETF universe.
 
@@ -161,7 +161,7 @@ strategy = TopNRebalanceStrategy(top_n=TOP_N, executor=executor)
 # ## Run it twice: with and without costs
 #
 # The only way to see what costs actually cost is to run the identical
-# strategy both ways and diff the result — not to quote a rule-of-thumb
+# strategy both ways and diff the result - not to quote a rule-of-thumb
 # bps haircut.
 
 # %%
@@ -200,11 +200,11 @@ print(
 #
 # `03_model_training` already showed a HAC-corrected IC that isn't
 # distinguishable from noise (t ≈ 0.65). Whatever this backtest reports
-# is the honest downstream consequence of that — not a separate, better
+# is the honest downstream consequence of that - not a separate, better
 # story. Two things worth checking regardless of the top-line number:
 #
 # - **The cost gap.** `with_costs` vs `zero_cost` on the *same* signal,
-#   same rebalance dates, same ranking — the only thing that changed is
+#   same rebalance dates, same ranking - the only thing that changed is
 #   whether commissions and spread are switched on. That gap is what
 #   "cost-aware" means in practice, not a modifier applied after the fact.
 # - **Turnover.** A monthly top-10-of-100 rebalance can still churn
@@ -212,10 +212,10 @@ print(
 #   `result_with_costs.trades` before trusting any Sharpe number here.
 #
 # Run against the full 2009-2025 window, this strategy's Sharpe drops from
-# 0.53 (zero cost) to 0.48 (with costs) — a real but modest haircut,
+# 0.53 (zero cost) to 0.48 (with costs) - a real but modest haircut,
 # because monthly rebalancing keeps turnover low (~6.4% per rebalance).
 # The dollar cost is not modest: **$28,918 in commissions and spread on a
-# $100,000 starting account over 16 years** — money a zero-cost backtest
+# $100,000 starting account over 16 years** - money a zero-cost backtest
 # would have quietly kept for itself. A strategy with a weaker HAC IC or a
 # shorter rebalance horizon would show a much larger gap; this is close to
 # the best case for "costs don't matter much here."
@@ -227,6 +227,6 @@ trades.head()
 
 # %% [markdown]
 # **This is where the pre-built notebooks stop.** Block 9 (research
-# agents) and block 10 (where to go next) are delivered live — see
+# agents) and block 10 (where to go next) are delivered live - see
 # `../docs/research_agent_demo.md` and the closing slides for what comes
 # after "the backtest looks weak, now what."

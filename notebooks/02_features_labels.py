@@ -15,7 +15,7 @@
 #
 # **Supports agenda blocks 3 and 5** ("The Modern Quant Stack" /
 # "The Judgment You Don't Delegate"). We turn the raw OHLCV panel into a
-# small, interpretable feature set and a forward-return label — then spend
+# small, interpretable feature set and a forward-return label - then spend
 # as much time checking that neither leaks information from the future as
 # we spent building them. That check is the actual content of block 5: it's
 # the discipline an agent won't apply for you unless you specify it.
@@ -39,7 +39,7 @@ eligible_pairs = set(zip(eligibility["symbol"], eligibility["eligible_year"], st
 #
 # We drop any (symbol, date) where that ETF wasn't yet eligible in that
 # calendar year. This is the fix for the survivorship-style bug the
-# `01_data` notebook flagged — without it, the 100-symbol universe is
+# `01_data` notebook flagged - without it, the 100-symbol universe is
 # implicitly "the 100 winners as selected today," present on day one of a
 # 2006 backtest where in reality most of them didn't exist yet.
 
@@ -54,7 +54,7 @@ prices = prices[prices["eligible"]].drop(columns=["eligible", "year"]).reset_ind
 # %% [markdown]
 # ## Features
 #
-# Eight features across three families — momentum, volatility, and a
+# Eight features across three families - momentum, volatility, and a
 # mean-reversion oscillator (RSI). Each is computed **within symbol**
 # (`groupby("symbol")`), using only information available up to and
 # including the feature date. `ml4t.engineer` supplies RSI with Wilder's
@@ -81,7 +81,7 @@ features["symbol"] = prices["symbol"].to_numpy()
 features["timestamp"] = prices["timestamp"].to_numpy()
 
 # Cross-sectional dollar-volume rank needs the whole universe on each date,
-# not a per-symbol rolling window — a different axis from every feature above.
+# not a per-symbol rolling window - a different axis from every feature above.
 features["dollar_vol_rank"] = features.groupby("timestamp")["dollar_vol_21d"].rank(pct=True)
 
 feature_cols = [
@@ -101,11 +101,11 @@ features[["timestamp", "symbol", *feature_cols]].dropna().describe()
 #
 # The case study this workshop draws on uses **21-trading-day forward
 # return** (`fwd_ret_21d`) as its primary label, with a 5-day variant. We
-# use the same horizons here rather than inventing our own — matching the
+# use the same horizons here rather than inventing our own - matching the
 # book's own choice keeps this notebook consistent with what the case study
 # actually validated, not a workshop-only convention.
 #
-# `shift(-h)` looks *forward* — this line is the single most common source
+# `shift(-h)` looks *forward* - this line is the single most common source
 # of look-ahead leakage in a labeling pipeline, so it deserves being named
 # explicitly rather than buried in a helper function.
 
@@ -125,7 +125,7 @@ labels["timestamp"] = prices["timestamp"].to_numpy()
 # %% [markdown]
 # ## Prove the label doesn't leak
 #
-# Don't take "shift(-21) is forward-looking" on faith — check it. For a
+# Don't take "shift(-21) is forward-looking" on faith - check it. For a
 # handful of (symbol, date) pairs, `fwd_ret_21d` on day *t* must equal the
 # realized return from day *t* to day *t+21*, using **only** rows that come
 # strictly after *t* in the raw price series.
@@ -143,7 +143,7 @@ computed_fwd_ret = spy_labels.loc[check_idx, "fwd_ret_21d"]
 print(f"manual:   {manual_fwd_ret:.6f}")
 print(f"computed: {computed_fwd_ret:.6f}")
 assert np.isclose(manual_fwd_ret, computed_fwd_ret), "label does not match manual forward return"
-print("label matches a manual forward-return calculation — no off-by-one leak")
+print("label matches a manual forward-return calculation - no off-by-one leak")
 
 # %% [markdown]
 # ## Assemble and save the model dataset
@@ -151,8 +151,8 @@ print("label matches a manual forward-return calculation — no off-by-one leak"
 # One row per (timestamp, symbol) with features and both label horizons.
 # Rows with any NaN feature (the first ~252 days per symbol, before the
 # longest rolling window is full) or missing label (the last 21 days per
-# symbol, where there's no future to look forward into) are dropped —
-# **dropped, not filled** — filling them would itself be a leakage-adjacent
+# symbol, where there's no future to look forward into) are dropped -
+# **dropped, not filled** - filling them would itself be a leakage-adjacent
 # choice that needs its own justification.
 
 # %%
@@ -167,6 +167,6 @@ print(
 dataset.to_parquet(f"{DATA_DIR}/model_dataset.parquet", index=False)
 
 # %% [markdown]
-# **Next:** `03_model_training.ipynb` — walk-forward cross-validation,
+# **Next:** `03_model_training.ipynb` - walk-forward cross-validation,
 # LightGBM, and the Information Coefficient as the metric that actually
 # tells you whether any of this is worth trading.

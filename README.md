@@ -5,7 +5,7 @@ for Trading*.** Saturday, August 15, 2026 · 9:30 AM–1:00 PM ET (1:30–5:00 P
 UTC) · [tickets on Eventbrite](https://www.eventbrite.co.uk/e/machine-learning-for-trading-in-the-age-of-ai-agents-tickets-1994299755253).
 
 Build, test, and validate an end-to-end ML trading strategy on real market
-data — and use coding and research agents to build and validate it the way
+data - and use coding and research agents to build and validate it the way
 production quant teams do in 2026, not the way a 2020 tutorial does.
 
 This repo is everything you need for the session: the free 100-ETF dataset,
@@ -20,26 +20,26 @@ By the end of the session you'll have run, end to end, on 18 years of real
 ETF data:
 
 - A point-in-time-correct feature set (momentum, volatility, RSI, liquidity)
-  on a 100-ETF universe — and know exactly which line of code would leak the
+  on a 100-ETF universe - and know exactly which line of code would leak the
   future if you got it wrong.
 - A LightGBM model validated with walk-forward, leakage-aware cross-validation,
-  scored with the Information Coefficient — naive t-stat *and* the
+  scored with the Information Coefficient - naive t-stat *and* the
   HAC-corrected one, and why they can disagree by a factor of three.
 - A cost-aware backtest with real commission and spread modeling, so you've
   seen the actual dollar gap between "the backtest" and "the backtest with
-  costs switched on" — not a rule-of-thumb haircut.
+  costs switched on" - not a rule-of-thumb haircut.
 - A live look at a coding agent building part of this pipeline from a spec,
   and a live demo of the book's own multi-agent forecasting pipeline
   (Chapter 24) producing a calibrated, auditable probability estimate.
 
 ## Start here
 
-1. **[`docs/prerequisites.md`](docs/prerequisites.md)** — what you need
+1. **[`docs/prerequisites.md`](docs/prerequisites.md)** - what you need
    installed (spoiler: Python 3.12+, and a Docker/Colab fallback if that's
    inconvenient).
-2. **[`SETUP.md`](SETUP.md)** — three ways to get running: local `uv`,
+2. **[`SETUP.md`](SETUP.md)** - three ways to get running: local `uv`,
    Docker, or Colab. Pick one and verify it *before* Saturday.
-3. **[`notebooks/`](notebooks/)** — run in order: `01_data` →
+3. **[`notebooks/`](notebooks/)** - run in order: `01_data` →
    `02_features_labels` → `03_model_training` → `04_backtest`. Each one runs
    standalone against the data in this repo; each ends by pointing at the
    next.
@@ -47,7 +47,7 @@ ETF data:
 ## Repository layout
 
 ```
-notebooks/            01-04, run in order — the hands-on spine of the workshop
+notebooks/            01-04, run in order - the hands-on spine of the workshop
 data/                  the free 100-ETF dataset (ships with the repo, see data/README.md)
 docs/
   prerequisites.md     what you need before Saturday
@@ -58,8 +58,8 @@ SETUP.md               uv / Docker / Colab, pick one
 
 ## The agenda, briefly
 
-180 minutes, one break: the ML4T workflow — data → alpha factors → labels &
-validation → model → cost-aware backtest → live handoff — with two live agent
+180 minutes, one break: the ML4T workflow - data → alpha factors → labels &
+validation → model → cost-aware backtest → live handoff - with two live agent
 segments woven through it (a coding agent builds part of the pipeline; the
 book's own research-agent pipeline runs a live forecast). Full agenda and
 timing on the [Eventbrite page](https://www.eventbrite.co.uk/e/machine-learning-for-trading-in-the-age-of-ai-agents-tickets-1994299755253).
@@ -67,9 +67,9 @@ timing on the [Eventbrite page](https://www.eventbrite.co.uk/e/machine-learning-
 ## About the instructor
 
 Stefan Jansen is the author of *Machine Learning for Trading* (Packt), now in
-its 3rd edition, and founder of Applied AI. The book's companion code —
+its 3rd edition, and founder of Applied AI. The book's companion code -
 450+ notebooks across 27 chapters and 9 case studies, including the full,
-non-simplified version of the ETF pipeline this workshop draws on — is at
+non-simplified version of the ETF pipeline this workshop draws on - is at
 [`github.com/stefan-jansen/machine-learning-for-trading`](https://github.com/stefan-jansen/machine-learning-for-trading).
 
 ## Where to go next
