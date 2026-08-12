@@ -6,13 +6,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 \
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv
+
 WORKDIR /workshop
 
-COPY pyproject.toml ./
-RUN uv sync --no-install-project
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-install-project
 
 COPY . .
-RUN uv sync
+RUN uv sync --frozen
 
 EXPOSE 8888
 

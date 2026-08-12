@@ -17,14 +17,24 @@ jobs:
           python-version: "3.12"
 
       - name: Sync environment
-        run: uv sync --dev
+        run: uv sync --extra dev --frozen
 
-      - name: Lint
-        run: uv run ruff check .
-
-      - name: Execute notebooks (fail on any cell error)
+      - name: Static checks
         run: |
-          for nb in notebooks/*.ipynb; do
-            echo "=== $nb ==="
-            uv run jupyter nbconvert --to notebook --execute --stdout "$nb" > /dev/null
-          done
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run ty check
+
+      - name: Execute notebooks in workshop order
+        working-directory: notebooks
+        run: |
+          mkdir -p /tmp/packt-executed
+          uv run jupyter nbconvert \
+            --to notebook \
+            --execute \
+            --output-dir /tmp/packt-executed \
+            --ExecutePreprocessor.timeout=900 \
+            01_data.ipynb \
+            02_features_labels.ipynb \
+            03_model_training.ipynb \
+            04_backtest.ipynb

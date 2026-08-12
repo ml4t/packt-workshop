@@ -1,18 +1,36 @@
 # Machine Learning for Trading in the Age of AI Agents
 
 **A Packt book-launch workshop with Stefan Jansen, author of *Machine Learning
-for Trading*.** Saturday, August 15, 2026 · 9:30 AM–1:00 PM ET (1:30–5:00 PM
-UTC) · [tickets on Eventbrite](https://www.eventbrite.co.uk/e/machine-learning-for-trading-in-the-age-of-ai-agents-tickets-1994299755253).
+for Trading*.**
 
 Build, test, and validate an end-to-end ML trading strategy on real market
-data - and use coding and research agents to build and validate it the way
-production quant teams do in 2026, not the way a 2020 tutorial does.
+data - and use coding and research agents to build and validate it with
+current ML4T libraries and explicit checks at each stage.
 
-This repo is everything you need for the session: the free 100-ETF dataset,
-four working notebooks that take you from raw prices to a cost-aware
-backtest, and the briefs behind the two live agent segments. Clone it before
-Saturday and you're ready; nothing here depends on a paid data subscription,
-a brokerage account, or a GPU.
+This repo is everything you need for the session: the two workshop slide decks,
+the free 100-ETF dataset, four working notebooks that take you from raw prices
+to a cost-aware backtest, and the briefs behind the two live agent segments.
+Clone it before the workshop and you're ready; nothing here depends on a paid data
+subscription, a brokerage account, or a GPU.
+
+## How the guided build-along works
+
+Keep the current slide deck and notebook open side by side. When a green
+**Guided checkpoint** slide appears, run the named notebook section with
+Stefan, stop at the expected output, and compare your result before moving on.
+The notebooks are prepared: you are checking the research decisions and their
+outputs, not recreating the whole pipeline from an empty file.
+
+Run the notebooks in this order:
+
+1. `01_data.ipynb` - inspect the data and point-in-time eligibility.
+2. `02_features_labels.ipynb` - build features, verify the label, and save the model panel.
+3. `03_model_training.ipynb` - train 16 walk-forward folds and compare IC statistics.
+4. `04_backtest.ipynb` - run the same strategy with and without trading costs.
+
+The coding-agent build and research-agent forecast are presenter-led
+demonstrations. You receive both briefs, but you do not need an LLM API key or
+coding-agent subscription to complete the four-notebook build.
 
 ## What you'll build
 
@@ -38,17 +56,20 @@ ETF data:
    installed (spoiler: Python 3.12+, and a Docker/Colab fallback if that's
    inconvenient).
 2. **[`SETUP.md`](SETUP.md)** - three ways to get running: local `uv`,
-   Docker, or Colab. Pick one and verify it *before* Saturday.
+   Docker, or Colab. Pick one and verify it *before* the workshop.
 3. **[`notebooks/`](notebooks/)** - run in order: `01_data` →
    `02_features_labels` → `03_model_training` → `04_backtest`. Each one runs
    standalone against the data in this repo; each ends by pointing at the
    next.
+4. **[`slides/`](slides/)** - Part 1 runs through the break; Part 2 resumes
+   with model training. PPTX and PDF versions are included.
 
 ## Repository layout
 
 ```
 notebooks/            01-04, run in order - the hands-on spine of the workshop
 data/                  the free 100-ETF dataset (ships with the repo, see data/README.md)
+slides/                the two canonical workshop decks, in PPTX and PDF
 docs/
   prerequisites.md     what you need before Saturday
   coding_agent_brief.md    the spec used in the live coding-agent build
@@ -58,11 +79,10 @@ SETUP.md               uv / Docker / Colab, pick one
 
 ## The agenda, briefly
 
-180 minutes, one break: the ML4T workflow - data → alpha factors → labels &
+210 minutes, one break: the ML4T workflow - data → alpha factors → labels &
 validation → model → cost-aware backtest → live handoff - with two live agent
 segments woven through it (a coding agent builds part of the pipeline; the
-book's own research-agent pipeline runs a live forecast). Full agenda and
-timing on the [Eventbrite page](https://www.eventbrite.co.uk/e/machine-learning-for-trading-in-the-age-of-ai-agents-tickets-1994299755253).
+book's own research-agent pipeline runs a live forecast).
 
 ## About the instructor
 
@@ -74,14 +94,16 @@ non-simplified version of the ETF pipeline this workshop draws on - is at
 
 ## Where to go next
 
-This workshop is deliberately a 3-hour slice of a much larger workflow. If
-you want to go deeper after Saturday: **Foundations** (self-paced, the same
-ETF workflow end to end, Quantopian Community) for the hands-on version of
-everything this workshop moved quickly through; the **Agent Engineering**
-workshop for the coding-agent and research-agent threads specifically; or
-**Research to Production** (Maven, live cohort) for the same discipline
-applied across nine case studies with the full production/deployment arc.
-Links and current dates: [ml4trading.io](https://www.ml4trading.io).
+This workshop is a compact entry point into a larger workflow. Continue with
+the third-edition book and companion code, free **Lightning Lessons**,
+**Foundations**, **Loop Engineering: Reliable Work From Coding Agents**,
+**Engineering a Multi-Agent Forecasting System**, or **Machine Learning for
+Trading: From Research to Production**. Choose by the work you want to do
+next, not by a fixed sequence.
+
+- Book, companion code, and Foundations: [ml4trading.io](https://www.ml4trading.io)
+- Lightning Lessons, workshops, and live course:
+  [maven.com/stefan-jansen](https://maven.com/stefan-jansen)
 
 ## License
 

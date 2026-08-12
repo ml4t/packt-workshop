@@ -24,8 +24,10 @@ this repo's `pyproject.toml` - see `SETUP.md`.
   data or brokerage account is used anywhere in the workshop.
 - A coding agent (e.g. [Claude Code](https://claude.com/claude-code)) to
   follow along with the agent-assisted build in block 4. Not required to
-  follow the rest of the session - `docs/coding_agent_brief.md` has the
-  brief used live, if you want to run it yourself afterward.
+  follow the rest of the session. The coding-agent build and research-agent
+  forecast are presenter-led demonstrations; the four guided notebooks need
+  no LLM API key. `docs/coding_agent_brief.md` has the brief used live if you
+  want to run it yourself afterward.
 
 ## Experience
 

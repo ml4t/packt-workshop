@@ -13,8 +13,8 @@
 # %% [markdown]
 # # 04 · Backtesting the strategy - with real costs
 #
-# **Supports agenda block 7** ("Backtesting the Strategy") and sets up
-# block 9 ("Where to Go Next... why most backtests break"). We turn the
+# **Supports agenda block 8** ("Backtesting the Strategy") and sets up
+# block 10 ("Where to Go Next... why most backtests break"). We turn the
 # out-of-sample predictions from `03_model_training` into a monthly
 # top-N, equal-weight ETF portfolio and run it through `ml4t-backtest`'s
 # event-driven engine - **with commissions and slippage switched on
@@ -195,6 +195,11 @@ print(
     ]
 )
 
+assert abs(comparison.loc["sharpe", "zero_cost"] - 0.529468) < 1e-5
+assert abs(comparison.loc["sharpe", "with_costs"] - 0.478774) < 1e-5
+assert abs(comparison.loc["avg_turnover", "with_costs"] - 0.063866) < 1e-5
+assert abs(comparison.loc["total_costs", "with_costs"] - 28_917.68) < 1.0
+
 # %% [markdown]
 # ## Read this like a practitioner, not a scoreboard
 #
@@ -223,6 +228,7 @@ print(
 # %%
 trades = pd.DataFrame([asdict(t) for t in result_with_costs.trades])
 print(f"trades (with costs): {len(trades)}")
+assert len(trades) == 1283
 trades.head()
 
 # %% [markdown]

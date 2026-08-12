@@ -13,7 +13,7 @@
 # %% [markdown]
 # # 03 · Training and evaluating the model
 #
-# **Supports agenda block 6** ("Training & Evaluating the Model"). LightGBM
+# **Supports agenda block 7** ("Training & Evaluating the Model"). LightGBM
 # with walk-forward cross-validation - never a random shuffle-split, which
 # would train on the future and validate on the past - and the
 # **Information Coefficient (IC)**, HAC-corrected for the autocorrelation
@@ -59,19 +59,10 @@ X, y = dataset[feature_cols], dataset["fwd_ret_21d"]
 # %%
 cv = WalkForwardCV(
     n_splits=16,
-    test_size="1Y",
+    test_size="1Y",  # ty: ignore[invalid-argument-type] - runtime accepts time-based sizes
     label_horizon=LABEL_HORIZON,
     expanding=True,
     consecutive=True,
-)
-
-lgb_params = dict(
-    objective="regression",
-    n_estimators=200,
-    learning_rate=0.05,
-    num_leaves=15,
-    min_child_samples=200,
-    verbosity=-1,
 )
 
 fold_predictions = []
@@ -79,7 +70,14 @@ for fold, (train_idx, test_idx) in enumerate(cv.split(X)):
     X_train, y_train = X.iloc[train_idx], y.iloc[train_idx]
     X_test = X.iloc[test_idx]
 
-    model = lgb.LGBMRegressor(**lgb_params)
+    model = lgb.LGBMRegressor(
+        objective="regression",
+        n_estimators=200,
+        learning_rate=0.05,
+        num_leaves=15,
+        min_child_samples=200,
+        verbosity=-1,
+    )
     model.fit(X_train, y_train)
 
     preds = dataset.iloc[test_idx][["symbol", "fwd_ret_21d"]].copy()
@@ -98,7 +96,7 @@ for fold, (train_idx, test_idx) in enumerate(cv.split(X)):
 #
 # Every prediction above came from a fold where the model never saw that
 # period during training - this is out-of-sample by construction, not by
-# promise. We pool all four test folds and compute the cross-sectional
+# promise. We pool all 16 test folds and compute the cross-sectional
 # Spearman IC per date, then HAC-correct the resulting t-statistic.
 
 # %%
@@ -119,6 +117,12 @@ print(ic_series.describe())
 hac_stats = compute_ic_hac_stats(ic_series, ic_col="ic", label_horizon=LABEL_HORIZON)
 print(hac_stats)
 
+assert len(fold_predictions) == 16
+assert hac_stats["n_periods"] == 4032
+assert abs(hac_stats["mean_ic"] - 0.0086054) < 1e-6
+assert abs(hac_stats["naive_t_stat"] - 2.1797) < 1e-4
+assert abs(hac_stats["t_stat"] - 0.6550) < 1e-4
+
 # %% [markdown]
 # `hac_stats["mean_ic"]` is the honest headline number - not the naive
 # t-statistic you'd get from treating each daily IC observation as
@@ -134,7 +138,7 @@ print(hac_stats)
 # on a monthly-rebalanced ETF panel do not reliably beat noise once the
 # autocorrelation induced by the overlapping 21-day label is priced in.
 # A model with an IC this weak has no business going anywhere near a
-# backtest that claims a live edge; block 7 puts it through one anyway, on
+# backtest that claims a live edge; block 8 puts it through one anyway, on
 # purpose, to show what "weak signal, meet real costs" actually looks like.
 
 # %% [markdown]

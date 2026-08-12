@@ -1,0 +1,8 @@
+.git
+.github
+.venv
+.ruff_cache
+.ipynb_checkpoints
+data/model_dataset.parquet
+data/oos_predictions.parquet
+slides

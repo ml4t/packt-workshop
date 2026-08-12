@@ -1,20 +1,19 @@
 [project]
 name = "ml4t-packt-workshop"
 version = "1.0.0"
-description = "Machine Learning for Trading in the Age of AI Agents - Packt book-launch workshop, Sat Aug 15 2026"
+description = "Machine Learning for Trading in the Age of AI Agents - Packt book-launch workshop"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "yfinance>=0.2.40",
     "lightgbm>=4.5",
-    "xgboost>=2.1",
     "scikit-learn>=1.5",
     "pandas>=2.2",
     "numpy>=1.26",
     "matplotlib>=3.9",
     "seaborn>=0.13",
     "scipy>=1.13",
-    "polars>=1.9",
+    "polars>=1.43.2",
     "pyarrow>=17.0",
     "jupyter>=1.1",
     "ml4t-engineer>=0.1.0b10",

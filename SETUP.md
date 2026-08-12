@@ -1,8 +1,8 @@
 # Setup
 
-Three ways to get running. Pick the one that matches your machine - don't
-troubleshoot a local environment during the workshop when a working fallback
-is one click away.
+Three ways to get running. Pick the one that matches your machine. Complete
+the verification before the workshop so the guided checkpoints can focus on
+the research decisions rather than environment setup.
 
 ## Option A - local, with `uv` (recommended if you're on Python 3.12+)
 
@@ -13,8 +13,8 @@ uv sync
 uv run jupyter lab notebooks/
 ```
 
-`uv` installs Python 3.12 for you if you don't have it - you don't need to
-manage that yourself. Verify the install:
+The repository's `.python-version` asks `uv` for Python 3.12 and installs it
+for you if necessary. Verify the install:
 
 ```bash
 uv run python3 -c "import ml4t.engineer, ml4t.diagnostic, ml4t.backtest, lightgbm; print('OK')"
@@ -41,21 +41,21 @@ https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks
 ```
 
 (swap `01_data` for any of `02_features_labels`, `03_model_training`,
-`04_backtest`). The first cell of each notebook in this repo assumes the
-repo's own `data/` directory is a sibling - on Colab, run this once per
-session before the notebook's own first cell:
+`04_backtest`). The notebooks expect the repository's `data/` directory next
+to `notebooks/`. In a fresh Colab runtime, run this once before the notebook's
+first cell:
 
 ```python
 !git clone https://github.com/ml4t/packt-workshop.git
 %cd packt-workshop
-!pip install -q ml4t-engineer ml4t-diagnostic ml4t-backtest lightgbm
+!pip install -q .
 %cd notebooks
 ```
 
 ## Verifying you're actually ready
 
-Whichever option you pick, this should run without error before the workshop
-starts:
+Whichever option you pick, `01_data.ipynb` must execute without error before
+the workshop starts. From a local `uv` checkout, run:
 
 ```bash
 uv run jupyter nbconvert --to notebook --execute --stdout notebooks/01_data.ipynb > /dev/null && echo "ready"
@@ -63,3 +63,7 @@ uv run jupyter nbconvert --to notebook --execute --stdout notebooks/01_data.ipyn
 
 (swap `uv run` for `docker run --rm ml4t-packt-workshop uv run ...` under
 Option B).
+
+The complete guided sequence is `01_data` → `02_features_labels` →
+`03_model_training` → `04_backtest`. The later notebooks create intermediate
+files in `data/`, so run them in order.
