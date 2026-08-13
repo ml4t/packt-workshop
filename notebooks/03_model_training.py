@@ -64,10 +64,15 @@ if "COLAB_RELEASE_TAG" in os.environ:
 import lightgbm as lgb
 import pandas as pd
 from ml4t.diagnostic.metrics import compute_ic_hac_stats, cross_sectional_ic_series
-from ml4t.diagnostic.splitters import WalkForwardCV
+from ml4t.diagnostic.splitters import WalkForwardConfig, WalkForwardCV
 
 DATA_DIR = "../data"
 LABEL_HORIZON = 21  # trading days - must match the label built in 02_features_labels
+N_VALIDATION_FOLDS = 8
+TRAIN_SIZE = "10Y"
+VALIDATION_SIZE = "1Y"
+HOLDOUT_START = "2024-01-01"
+HOLDOUT_END = "2025-12-31"
 
 dataset = pd.read_parquet(f"{DATA_DIR}/model_dataset.parquet")
 feature_cols = [
@@ -88,27 +93,59 @@ X, y = dataset[feature_cols], dataset["fwd_ret_21d"]
 # %% [markdown]
 # ## Walk-forward cross-validation
 #
-# `label_horizon=21` is the load-bearing argument here - it tells the
-# splitter that a training row's label is only *fully known* 21 trading
-# days after its feature date, so it purges the training rows whose label
-# window would otherwise overlap the validation period. Skip this argument
-# and the "CV" silently leaks the validation period's own future into
-# training, which is exactly the kind of mistake a coding agent will
-# reproduce faithfully if you don't specify it in the brief.
+# The split matches the book's ETF case study: eight one-year validation
+# folds, a rolling 10-year training boundary, a 21-trading-day purge, and a
+# sealed holdout from 2024-01-01 through 2025-12-31. `label_horizon=21` tells
+# the splitter that a training row's label is only fully known 21 trading
+# days after its feature date. It therefore removes training rows whose
+# label window would otherwise overlap validation.
+#
+# The splitter operates on unique trading dates. Passing the repeated panel
+# index directly would count one row per ETF rather than one session and
+# produce incorrect fold boundaries.
 
 # %%
-cv = WalkForwardCV(
-    n_splits=16,
-    test_size="1Y",  # ty: ignore[invalid-argument-type] - runtime accepts time-based sizes
+split_dates = pd.DatetimeIndex(X.index.unique()).sort_values()
+split_frame = pd.DataFrame(index=split_dates)
+
+cv_config = WalkForwardConfig(
+    n_splits=N_VALIDATION_FOLDS,
+    train_size=TRAIN_SIZE,
+    test_size=VALIDATION_SIZE,
     label_horizon=LABEL_HORIZON,
-    expanding=True,
-    consecutive=True,
+    test_start=HOLDOUT_START,
+    test_end=HOLDOUT_END,
+    fold_direction="backward",
+    calendar_id="NYSE",
+)
+cv = WalkForwardCV(config=cv_config)
+cv.expanding = False
+
+backward_splits = list(cv.split(split_frame))
+validation_splits = list(reversed(backward_splits))
+holdout_dates = split_dates[cv.test_indices_]
+
+assert len(validation_splits) == N_VALIDATION_FOLDS
+assert all(len(validation_idx) == 252 for _, validation_idx in validation_splits)
+assert max(len(train_idx) for train_idx, _ in validation_splits) <= 10 * 252
+assert all(
+    split_dates[train_idx[-1]] < split_dates[validation_idx[0]]
+    for train_idx, validation_idx in validation_splits
+)
+assert max(split_dates[validation_idx[-1]] for _, validation_idx in validation_splits) < min(
+    holdout_dates
 )
 
 fold_predictions = []
-for fold, (train_idx, test_idx) in enumerate(cv.split(X)):
-    X_train, y_train = X.iloc[train_idx], y.iloc[train_idx]
-    X_test = X.iloc[test_idx]
+fold_windows = []
+for fold, (train_date_idx, validation_date_idx) in enumerate(validation_splits):
+    train_dates = split_dates[train_date_idx]
+    validation_dates = split_dates[validation_date_idx]
+    train_rows = X.index.isin(train_dates)
+    validation_rows = X.index.isin(validation_dates)
+
+    X_train, y_train = X.loc[train_rows], y.loc[train_rows]
+    X_validation = X.loc[validation_rows]
 
     model = lgb.LGBMRegressor(
         objective="regression",
@@ -120,24 +157,43 @@ for fold, (train_idx, test_idx) in enumerate(cv.split(X)):
     )
     model.fit(X_train, y_train)
 
-    preds = dataset.iloc[test_idx][["symbol", "fwd_ret_21d"]].copy()
-    preds["prediction"] = model.predict(X_test)
+    preds = dataset.loc[validation_rows, ["symbol", "fwd_ret_21d"]].copy()
+    preds["prediction"] = model.predict(X_validation)
     preds["fold"] = fold
     fold_predictions.append(preds)
 
+    fold_windows.append(
+        {
+            "fold": fold,
+            "train_start": X_train.index.min().date(),
+            "train_end": X_train.index.max().date(),
+            "validation_start": X_validation.index.min().date(),
+            "validation_end": X_validation.index.max().date(),
+        }
+    )
+
     print(
         f"fold {fold}: train {X_train.index.min().date()}..{X_train.index.max().date()} "
-        f"({len(X_train):,} rows) -> test {X_test.index.min().date()}..{X_test.index.max().date()} "
-        f"({len(X_test):,} rows)"
+        f"({len(X_train):,} rows) -> validation "
+        f"{X_validation.index.min().date()}..{X_validation.index.max().date()} "
+        f"({len(X_validation):,} rows)"
     )
+
+print(
+    f"sealed holdout: {holdout_dates.min().date()}..{holdout_dates.max().date()} "
+    f"({len(holdout_dates):,} trading days)"
+)
+
+pd.DataFrame(fold_windows)
 
 # %% [markdown]
 # ## The Information Coefficient
 #
 # Every prediction above came from a fold where the model never saw that
 # period during training - this is out-of-sample by construction, not by
-# promise. We pool all 16 test folds and compute the cross-sectional
-# Spearman IC per date, then HAC-correct the resulting t-statistic.
+# promise. We pool the eight validation folds and compute the cross-sectional
+# Spearman IC per date, then HAC-correct the resulting t-statistic. The two
+# holdout years remain sealed and do not influence this model assessment.
 
 # %%
 oos = pd.concat(fold_predictions).reset_index().rename(columns={"index": "timestamp"})
@@ -157,11 +213,13 @@ print(ic_series.describe())
 hac_stats = compute_ic_hac_stats(ic_series, ic_col="ic", label_horizon=LABEL_HORIZON)
 print(hac_stats)
 
-assert len(fold_predictions) == 16
-assert hac_stats["n_periods"] == 4032
-assert abs(hac_stats["mean_ic"] - 0.0086054) < 1e-6
-assert abs(hac_stats["naive_t_stat"] - 2.1797) < 1e-4
-assert abs(hac_stats["t_stat"] - 0.6550) < 1e-4
+assert len(fold_predictions) == N_VALIDATION_FOLDS
+assert hac_stats["n_periods"] == N_VALIDATION_FOLDS * 252
+assert abs(hac_stats["mean_ic"] - 0.0152068) < 1e-6
+assert abs(hac_stats["naive_t_stat"] - 3.0198) < 1e-4
+assert abs(hac_stats["t_stat"] - 0.9418) < 1e-4
+assert holdout_dates.min() >= pd.Timestamp(HOLDOUT_START, tz="UTC")
+assert holdout_dates.max() <= pd.Timestamp(HOLDOUT_END, tz="UTC")
 
 # %% [markdown]
 # `hac_stats["mean_ic"]` is the honest headline number - not the naive
@@ -173,7 +231,7 @@ assert abs(hac_stats["t_stat"] - 0.6550) < 1e-4
 # for, rather than relying on order selection alone.
 #
 # **Run this notebook and the two t-stats disagree with each other**: naive
-# ≈ 2.18 (nominally "significant" at 5%), HAC ≈ 0.65 (nowhere close). That
+# ≈ 3.02 (nominally "significant"), HAC ≈ 0.94 (not significant). That
 # gap *is* the lesson, not a bug to fix - eight simple technical features
 # on a monthly-rebalanced ETF panel do not reliably beat noise once the
 # autocorrelation induced by the overlapping 21-day label is priced in.

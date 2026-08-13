@@ -46,7 +46,8 @@ Run the notebooks in this order:
 
 1. `01_data.ipynb` - inspect the data and point-in-time eligibility.
 2. `02_features_labels.ipynb` - build features, verify the label, and save the model panel.
-3. `03_model_training.ipynb` - train 16 walk-forward folds and compare IC statistics.
+3. `03_model_training.ipynb` - train eight walk-forward validation folds, keep the
+   2024-2025 holdout sealed, and compare IC statistics.
 4. `04_backtest.ipynb` - run the same strategy with and without trading costs.
 
 The coding-agent build and research-agent forecast are presenter-led

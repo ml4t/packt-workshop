@@ -47,8 +47,8 @@ including where it goes wrong, then fixing the brief rather than the code.
   producing a *better-looking* number, which is why it doesn't get caught by
   "does this run without erroring."
 - **It asks for the naive-vs-HAC comparison as a checkpoint, not a bonus.**
-  `03_model_training.ipynb` in this repo found naive t ≈ 2.18 (looks
-  significant) vs. HAC t ≈ 0.65 (isn't) on this exact dataset - an agent that
+  `03_model_training.ipynb` in this repo found naive t ≈ 3.02 (looks
+  significant) vs. HAC t ≈ 0.94 (isn't) on this exact dataset - an agent that
   only reports the naive number will confidently ship a false positive.
 - **It builds in two stop-and-show checkpoints.** An agent with tool access
   will happily run a wrong pipeline to completion and report a plausible

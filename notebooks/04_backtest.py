@@ -238,16 +238,16 @@ print(
     ]
 )
 
-assert abs(comparison.loc["sharpe", "zero_cost"] - 0.529468) < 1e-5
-assert abs(comparison.loc["sharpe", "with_costs"] - 0.478774) < 1e-5
-assert abs(comparison.loc["avg_turnover", "with_costs"] - 0.063866) < 1e-5
-assert abs(comparison.loc["total_costs", "with_costs"] - 28_917.68) < 1.0
+assert abs(comparison.loc["sharpe", "zero_cost"] - 0.477991) < 1e-5
+assert abs(comparison.loc["sharpe", "with_costs"] - 0.440466) < 1e-5
+assert abs(comparison.loc["avg_turnover", "with_costs"] - 0.059523) < 1e-5
+assert abs(comparison.loc["total_costs", "with_costs"] - 8_596.84) < 1.0
 
 # %% [markdown]
 # ## Read this like a practitioner, not a scoreboard
 #
 # `03_model_training` already showed a HAC-corrected IC that isn't
-# distinguishable from noise (t ≈ 0.65). Whatever this backtest reports
+# distinguishable from noise (t ≈ 0.94). Whatever this backtest reports
 # is the honest downstream consequence of that - not a separate, better
 # story. Two things worth checking regardless of the top-line number:
 #
@@ -259,19 +259,17 @@ assert abs(comparison.loc["total_costs", "with_costs"] - 28_917.68) < 1.0
 #   heavily if the ranking is unstable month to month; check
 #   `result_with_costs.trades` before trusting any Sharpe number here.
 #
-# Run against the full 2009-2025 window, this strategy's Sharpe drops from
-# 0.53 (zero cost) to 0.48 (with costs) - a real but modest haircut,
-# because monthly rebalancing keeps turnover low (~6.4% per rebalance).
-# The dollar cost is not modest: **$28,918 in commissions and spread on a
-# $100,000 starting account over 16 years** - money a zero-cost backtest
-# would have quietly kept for itself. A strategy with a weaker HAC IC or a
-# shorter rebalance horizon would show a much larger gap; this is close to
-# the best case for "costs don't matter much here."
+# Across the eight validation folds from late 2015 through 2023, this
+# strategy's Sharpe drops from 0.48 (zero cost) to 0.44 (with costs) - a
+# real but modest reduction because monthly rebalancing keeps turnover near
+# 6.0% per rebalance. Commissions and spread total **$8,597 on a $100,000
+# starting account**. The 2024-2025 holdout remains sealed; this result is
+# validation evidence, not a final test result.
 
 # %%
 trades = pd.DataFrame([asdict(t) for t in result_with_costs.trades])
 print(f"trades (with costs): {len(trades)}")
-assert len(trades) == 1283
+assert len(trades) == 597
 trades.head()
 
 # %% [markdown]
