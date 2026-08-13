@@ -27,7 +27,7 @@ import sys
 from pathlib import Path
 
 if "COLAB_RELEASE_TAG" in os.environ:
-    repo_dir = Path("/content/packt-workshop")
+    repo_dir = Path(os.environ.get("PACKT_WORKSHOP_DIR", "/content/packt-workshop"))
     if not repo_dir.exists():
         subprocess.run(
             [
@@ -40,9 +40,20 @@ if "COLAB_RELEASE_TAG" in os.environ:
             ],
             check=True,
         )
-    ready = Path("/content/.packt-workshop-ready")
+    ready = repo_dir.parent / ".packt-workshop-ready"
     if not ready.exists():
-        subprocess.run([sys.executable, "-m", "pip", "install", "-q", repo_dir], check=True)
+        subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                "-q",
+                "-r",
+                repo_dir / "requirements-colab.txt",
+            ],
+            check=True,
+        )
         ready.touch()
     os.chdir(repo_dir / "notebooks")
 

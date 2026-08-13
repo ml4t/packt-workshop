@@ -6,7 +6,9 @@ for Trading*.**
 ## Quick start
 
 Run the notebooks in order. Each Colab notebook installs this repository in a
-fresh runtime and uses the bundled ETF data; no local setup is required.
+fresh runtime and uses the bundled ETF data; no local setup is required. This
+is the compact ETF quick start for the full [*Machine Learning for Trading*
+companion repository](https://github.com/stefan-jansen/machine-learning-for-trading).
 
 | Notebook | Open in Colab |
 |---|---|
@@ -14,6 +16,10 @@ fresh runtime and uses the bundled ETF data; no local setup is required.
 | 2. Features and labels | [Open `02_features_labels.ipynb`](https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks/02_features_labels.ipynb) |
 | 3. Model training | [Open `03_model_training.ipynb`](https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks/03_model_training.ipynb) |
 | 4. Cost-aware backtest | [Open `04_backtest.ipynb`](https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks/04_backtest.ipynb) |
+
+Notebooks 3 and 4 regenerate any missing intermediate files when opened
+directly in a fresh Colab runtime. Running 1-4 in order avoids that repeated
+work and follows the workshop narrative.
 
 Prefer local files? [Download the complete repository as a ZIP](https://github.com/ml4t/packt-workshop/archive/refs/heads/main.zip),
 extract it, and follow [`SETUP.md`](SETUP.md).

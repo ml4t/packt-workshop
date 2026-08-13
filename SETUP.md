@@ -42,8 +42,9 @@ https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks
 
 Each notebook's first code cell detects Colab, clones this repository, installs
 the locked project dependencies, and selects the `notebooks/` working
-directory. Keep the same Colab runtime while moving through notebooks 1-4 so
-the intermediate model dataset and predictions remain available.
+directory. Notebooks 3 and 4 regenerate missing prerequisite outputs when
+opened directly in a fresh runtime. Running notebooks 1-4 in order is faster
+and follows the workshop sequence.
 
 ## Verifying you're actually ready
 
