@@ -3,6 +3,21 @@
 **A Packt book-launch workshop with Stefan Jansen, author of *Machine Learning
 for Trading*.**
 
+## Quick start
+
+Run the notebooks in order. Each Colab notebook installs this repository in a
+fresh runtime and uses the bundled ETF data; no local setup is required.
+
+| Notebook | Open in Colab |
+|---|---|
+| 1. Data and eligibility | [Open `01_data.ipynb`](https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks/01_data.ipynb) |
+| 2. Features and labels | [Open `02_features_labels.ipynb`](https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks/02_features_labels.ipynb) |
+| 3. Model training | [Open `03_model_training.ipynb`](https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks/03_model_training.ipynb) |
+| 4. Cost-aware backtest | [Open `04_backtest.ipynb`](https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks/04_backtest.ipynb) |
+
+Prefer local files? [Download the complete repository as a ZIP](https://github.com/ml4t/packt-workshop/archive/refs/heads/main.zip),
+extract it, and follow [`SETUP.md`](SETUP.md).
+
 Build, test, and validate an end-to-end ML trading strategy on real market
 data - and use coding and research agents to build and validate it with
 current ML4T libraries and explicit checks at each stage.

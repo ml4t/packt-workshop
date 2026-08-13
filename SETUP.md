@@ -34,23 +34,16 @@ disposable local container, don't publish this port anywhere).
 
 ## Option C - Colab (nothing to install)
 
-Open a notebook directly from GitHub:
+Open the first notebook directly from GitHub:
 
 ```
 https://colab.research.google.com/github/ml4t/packt-workshop/blob/main/notebooks/01_data.ipynb
 ```
 
-(swap `01_data` for any of `02_features_labels`, `03_model_training`,
-`04_backtest`). The notebooks expect the repository's `data/` directory next
-to `notebooks/`. In a fresh Colab runtime, run this once before the notebook's
-first cell:
-
-```python
-!git clone https://github.com/ml4t/packt-workshop.git
-%cd packt-workshop
-!pip install -q .
-%cd notebooks
-```
+Each notebook's first code cell detects Colab, clones this repository, installs
+the locked project dependencies, and selects the `notebooks/` working
+directory. Keep the same Colab runtime while moving through notebooks 1-4 so
+the intermediate model dataset and predictions remain available.
 
 ## Verifying you're actually ready
 

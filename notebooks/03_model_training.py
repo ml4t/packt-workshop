@@ -21,6 +21,32 @@
 # that actually says whether the model found anything.
 
 # %%
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+if "COLAB_RELEASE_TAG" in os.environ:
+    repo_dir = Path("/content/packt-workshop")
+    if not repo_dir.exists():
+        subprocess.run(
+            [
+                "git",
+                "clone",
+                "--depth",
+                "1",
+                "https://github.com/ml4t/packt-workshop.git",
+                repo_dir,
+            ],
+            check=True,
+        )
+    ready = Path("/content/.packt-workshop-ready")
+    if not ready.exists():
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", repo_dir], check=True)
+        ready.touch()
+    os.chdir(repo_dir / "notebooks")
+
+# %%
 import lightgbm as lgb
 import pandas as pd
 from ml4t.diagnostic.metrics import compute_ic_hac_stats, cross_sectional_ic_series
