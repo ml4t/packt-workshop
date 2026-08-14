@@ -182,6 +182,19 @@ run something closer to a point-in-time backtest, not an optional filter.
 
 The $10M threshold is not inflation-adjusted across the 20-year window.
 
+## `research_agent_trace.json`
+
+One complete, real run of the book's Chapter 24 `AIAForecaster` pipeline -
+not this workshop's data, not ETF-related, walked through in
+`notebooks/05_research_agent_trace.ipynb` as agenda block 9's research-agent
+segment instead of a live LLM call. Trimmed from the full raw trace (source
+path and run metadata are in the file's own `provenance` key): every
+agent-generated number and piece of reasoning is kept verbatim, only the raw
+web search results each specialist queried along the way are dropped (third-
+party scraped content, not needed for the walkthrough, and the bulk of the
+original 114KB). See `docs/research_agent_demo.md` for why this segment
+traces a frozen run instead of executing the pipeline live.
+
 ## License / attribution
 
 Yahoo Finance data, redistributed for educational use in this workshop. Not for

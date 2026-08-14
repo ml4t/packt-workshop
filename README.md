@@ -52,9 +52,11 @@ Run the notebooks in this order:
    2024-2025 holdout sealed, and compare IC statistics.
 4. `04_backtest.ipynb` - run the same strategy with and without trading costs.
 
-The coding-agent build and research-agent forecast are presenter-led
-demonstrations. You receive both briefs, but you do not need an LLM API key or
-coding-agent subscription to complete the four-notebook build.
+The coding-agent build is a presenter-led demonstration; the research-agent
+segment traces a real, already-run pipeline result in `05_research_agent_trace.ipynb`
+rather than firing a live LLM call. You receive both briefs, but you do not
+need an LLM API key or coding-agent subscription to complete the
+five-notebook build.
 
 ## What you'll build
 
@@ -83,20 +85,19 @@ ETF data:
 2. **[`SETUP.md`](SETUP.md)** - three ways to get running: local `uv`,
    Docker, or Colab. Pick one and verify it *before* the workshop.
 3. **[`notebooks/`](notebooks/)** - run in order: `01_data` →
-   `02_features_labels` → `03_model_training` → `04_backtest`. Each one runs
-   standalone against the data in this repo; each ends by pointing at the
-   next.
+   `02_features_labels` → `03_model_training` → `04_backtest` →
+   `05_research_agent_trace`. Each one runs standalone against the data in
+   this repo; each ends by pointing at the next.
 
 ## Repository layout
 
 ```
-notebooks/            01-04, run in order - the hands-on spine of the workshop
-data/                  the free 100-ETF dataset (ships with the repo, see data/README.md)
+notebooks/            01-05, run in order - the hands-on spine of the workshop
+data/                  the free 100-ETF dataset, plus one bundled real agent trace (see data/README.md)
 docs/
   prerequisites.md     what you need before Saturday
   coding_agent_brief.md    the spec used in the live coding-agent build
-  research_agent_demo.md  why the forecasting-agent segment is a walkthrough, not a live LLM run
-  research_agent_trace_example.md  the real, complete pipeline run walked through live
+  research_agent_demo.md  why the forecasting-agent segment traces a real run instead of a live LLM call
 SETUP.md               uv / Docker / Colab, pick one
 ```
 

@@ -1,15 +1,17 @@
 # Research agent walkthrough (agenda block 9)
 
 **This is a presenter-led walkthrough of a real, already-run pipeline, not a
-live LLM demo and not a hands-on exercise.** A live multi-agent pipeline run
+live LLM demo and not a coding exercise.** A live multi-agent pipeline run
 needs API keys, the book's own Docker image, and a separate repo clone -
 none of that is part of this workshop's tested setup, and a live call
 failing mid-session in front of a paying room has no fallback. Instead, the
-presenter walks through `docs/research_agent_trace_example.md`, a complete
-real run bundled in this repo: three specialists disagree by 37 points, a
-three-round debate fails to reach consensus, and the supervisor still
-commits to one number. Real numbers throughout, nothing fabricated - see
-that file for the full walkthrough and its exact provenance.
+presenter runs `notebooks/05_research_agent_trace.ipynb`, which loads one
+complete real run bundled in this repo (`data/research_agent_trace.json`)
+and walks through it live in code: three specialists disagree by 37 points,
+a three-round debate fails to reach consensus, and the supervisor still
+commits to one number. Real numbers throughout, nothing fabricated - and
+because it's a frozen trace with no live API calls, it's also completely
+safe for anyone in the room to run themselves, during the segment or after.
 
 ## What it is
 
@@ -38,7 +40,7 @@ calibration-transform arithmetic - but on an author-selected synthetic
 panel assembled after outcomes were known, to make the scoring-rule math
 reproducible, not a live accuracy measurement of this pipeline's forecasts.
 Don't present NB09's numbers as this pipeline's real calibration - see the
-last section of `research_agent_trace_example.md` for why.
+closing cells of `notebooks/05_research_agent_trace.ipynb` for why.
 
 ## Why the live pipeline isn't in this repo
 
@@ -46,7 +48,8 @@ Running it needs live LLM API calls (not reproducible on a fixed schedule
 for 150 concurrent attendees), the book's own Docker image, and API keys -
 none of which belong in a repo meant to run offline on the free ETF
 dataset. What *is* in this repo is one complete, real, already-run trace
-(`research_agent_trace_example.md`) - the presenter walks through that
+(`data/research_agent_trace.json`, walked through in
+`notebooks/05_research_agent_trace.ipynb`) - the presenter runs that
 instead of executing the pipeline live.
 
 ## If you want to run it after the workshop
