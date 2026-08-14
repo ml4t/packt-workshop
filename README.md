@@ -28,15 +28,17 @@ Build, test, and validate an end-to-end ML trading strategy on real market
 data - and use coding and research agents to build and validate it with
 current ML4T libraries and explicit checks at each stage.
 
-This repo is everything you need for the session: the two workshop slide decks,
-the free 100-ETF dataset, four working notebooks that take you from raw prices
-to a cost-aware backtest, and the briefs behind the two live agent segments.
+This repo is everything you need to run the hands-on side of the session: the
+free 100-ETF dataset, four working notebooks that take you from raw prices to
+a cost-aware backtest, and the briefs behind the two live agent segments.
 Clone it before the workshop and you're ready; nothing here depends on a paid data
-subscription, a brokerage account, or a GPU.
+subscription, a brokerage account, or a GPU. The slide decks are provided
+through the workshop platform, not this repo.
 
 ## How the guided build-along works
 
-Keep the current slide deck and notebook open side by side. When a green
+Keep the slide deck (provided separately) and this repo's current notebook
+open side by side. When a green
 **Guided checkpoint** slide appears, run the named notebook section with
 Stefan, stop at the expected output, and compare your result before moving on.
 The notebooks are prepared: you are checking the research decisions and their
@@ -83,15 +85,12 @@ ETF data:
    `02_features_labels` → `03_model_training` → `04_backtest`. Each one runs
    standalone against the data in this repo; each ends by pointing at the
    next.
-4. **[`slides/`](slides/)** - Part 1 runs through the break; Part 2 resumes
-   with model training. PPTX and PDF versions are included.
 
 ## Repository layout
 
 ```
 notebooks/            01-04, run in order - the hands-on spine of the workshop
 data/                  the free 100-ETF dataset (ships with the repo, see data/README.md)
-slides/                the two canonical workshop decks, in PPTX and PDF
 docs/
   prerequisites.md     what you need before Saturday
   coding_agent_brief.md    the spec used in the live coding-agent build
