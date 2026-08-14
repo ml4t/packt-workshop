@@ -57,6 +57,20 @@ including where it goes wrong, then fixing the brief rather than the code.
 
 ## If you're running this yourself, not live
 
-Compare whatever the agent produces against `notebooks/02_features_labels.ipynb`
-and `notebooks/03_model_training.ipynb` - same data, same library calls, same
-horizons. Where they disagree, that's the interesting part.
+Not a file diff - the agent won't produce a notebook, and `.ipynb` JSON isn't
+readable that way even if it did. Check these specific points against
+`notebooks/02_features_labels.ipynb` and `notebooks/03_model_training.ipynb`'s
+own executed output instead:
+
+- **Eligibility**: does it apply the point-in-time filter before building any
+  feature? The reference keeps **84.2%** of (symbol, day) rows.
+- **Features**: same eight - momentum at 21/63/126/252d, volatility at 21/63d,
+  RSI(14), dollar-volume rank - or did it invent/drop one?
+- **Split**: walk-forward (`WalkForwardCV`, `label_horizon=21`), not a random
+  train/test split.
+- **Evaluation**: does it report both statistics, or only the naive one? The
+  reference gets naive t **≈ 3.02** and HAC-corrected t **≈ 0.94** - an agent
+  that only surfaces the naive number has shipped a false positive.
+
+Where it disagrees on any of these, that's the interesting part - not "does
+the final number match to four decimal places."
