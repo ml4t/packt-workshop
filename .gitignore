@@ -18,6 +18,7 @@ venv/
 # only the source dataset ships with the repo.
 data/model_dataset.parquet
 data/oos_predictions.parquet
+figures/
 
 # Sensitive
 *.env

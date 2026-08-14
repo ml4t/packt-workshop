@@ -17,7 +17,7 @@ dependencies = [
     "pyarrow>=17.0",
     "jupyter>=1.1",
     "ml4t-engineer>=0.1.0b10",
-    "ml4t-diagnostic>=0.1.0b25",
+    "ml4t-diagnostic[viz]>=0.1.0b25",
     "ml4t-backtest>=0.1.0b22",
 ]
 
