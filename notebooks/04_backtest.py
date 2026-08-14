@@ -50,6 +50,15 @@ if "COLAB_RELEASE_TAG" in os.environ:
         )
     ready = repo_dir.parent / ".packt-workshop-ready"
     if not ready.exists():
+        # Colab's kernel already has numpy imported before this cell runs. Installing a
+        # different numpy from requirements-colab.txt overwrites the files on disk but not
+        # the compiled submodules already cached in this process, so importing a numpy
+        # submodule for the first time later (e.g. via ml4t.engineer) mixes the new files
+        # with the stale cached extension and raises ImportError. Put numpy back to the
+        # version this process already has loaded once the rest of the install is done.
+        import numpy as _colab_numpy
+
+        colab_numpy_version = _colab_numpy.__version__
         subprocess.run(
             [
                 sys.executable,
@@ -59,6 +68,19 @@ if "COLAB_RELEASE_TAG" in os.environ:
                 "-q",
                 "-r",
                 repo_dir / "requirements-colab.txt",
+            ],
+            check=True,
+        )
+        subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                "-q",
+                "--force-reinstall",
+                "--no-deps",
+                f"numpy=={colab_numpy_version}",
             ],
             check=True,
         )
