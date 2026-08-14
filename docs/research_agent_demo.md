@@ -1,9 +1,15 @@
-# Research agent demo (agenda block 9)
+# Research agent walkthrough (agenda block 9)
 
-**This is a live demo, not a hands-on exercise** - the agenda deliberately
-doesn't ask 150 attendees to run a multi-agent LLM pipeline in a 20-minute
-block. What follows is what's being demoed and where to find it if you want
-to run it yourself afterward.
+**This is a presenter-led walkthrough of a real, already-run pipeline, not a
+live LLM demo and not a hands-on exercise.** A live multi-agent pipeline run
+needs API keys, the book's own Docker image, and a separate repo clone -
+none of that is part of this workshop's tested setup, and a live call
+failing mid-session in front of a paying room has no fallback. Instead, the
+presenter walks through `docs/research_agent_trace_example.md`, a complete
+real run bundled in this repo: three specialists disagree by 37 points, a
+three-round debate fails to reach consensus, and the supervisor still
+commits to one number. Real numbers throughout, nothing fabricated - see
+that file for the full walkthrough and its exact provenance.
 
 ## What it is
 
@@ -27,15 +33,21 @@ It's an **agent → aggregation → debate → supervisor** pipeline (the
 This is the chapter's replication of Bridgewater's publicly described
 "AIA" (Artificial Intelligence Analyst) approach - the differentiator over a
 single-shot LLM call is the disagreement-aware aggregation and the debate
-phase, both scored for calibration (Brier score, log-loss) against resolved
-outcomes in the chapter's NB09.
+phase. The chapter's own NB09 also demonstrates Brier-score / log-loss /
+calibration-transform arithmetic - but on an author-selected synthetic
+panel assembled after outcomes were known, to make the scoring-rule math
+reproducible, not a live accuracy measurement of this pipeline's forecasts.
+Don't present NB09's numbers as this pipeline's real calibration - see the
+last section of `research_agent_trace_example.md` for why.
 
-## Why it's not in this repo
+## Why the live pipeline isn't in this repo
 
-It needs live LLM API calls (not reproducible on a fixed schedule for 150
-concurrent attendees), the book's own Docker image, and API keys - none of
-which belong in a repo meant to run offline on the free ETF dataset. The demo
-runs from the presenter's own environment.
+Running it needs live LLM API calls (not reproducible on a fixed schedule
+for 150 concurrent attendees), the book's own Docker image, and API keys -
+none of which belong in a repo meant to run offline on the free ETF
+dataset. What *is* in this repo is one complete, real, already-run trace
+(`research_agent_trace_example.md`) - the presenter walks through that
+instead of executing the pipeline live.
 
 ## If you want to run it after the workshop
 

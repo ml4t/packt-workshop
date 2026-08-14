@@ -71,8 +71,9 @@ ETF data:
   seen the actual dollar gap between "the backtest" and "the backtest with
   costs switched on" - not a rule-of-thumb haircut.
 - A live look at a coding agent building part of this pipeline from a spec,
-  and a live demo of the book's own multi-agent forecasting pipeline
-  (Chapter 24) producing a calibrated, auditable probability estimate.
+  and a walkthrough of a real, already-run trace of the book's own
+  multi-agent forecasting pipeline (Chapter 24) producing a calibrated,
+  auditable probability estimate.
 
 ## Start here
 
@@ -94,7 +95,8 @@ data/                  the free 100-ETF dataset (ships with the repo, see data/R
 docs/
   prerequisites.md     what you need before Saturday
   coding_agent_brief.md    the spec used in the live coding-agent build
-  research_agent_demo.md  what the live forecasting-agent demo is and where to find it
+  research_agent_demo.md  why the forecasting-agent segment is a walkthrough, not a live LLM run
+  research_agent_trace_example.md  the real, complete pipeline run walked through live
 SETUP.md               uv / Docker / Colab, pick one
 ```
 
