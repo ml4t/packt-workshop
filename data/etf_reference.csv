@@ -1,0 +1,101 @@
+symbol,group,name
+DBA,commodities,"Invesco DB Agriculture Fund - wheat, corn, soybeans, sugar"
+DBC,commodities,Invesco DB Commodity Index Tracking Fund - broad basket
+GLD,commodities,SPDR Gold Shares - gold bullion
+GSG,commodities,iShares S&P GSCI Commodity-Indexed Trust - energy-heavy basket
+IAU,commodities,iShares Gold Trust - gold bullion
+PPLT,commodities,abrdn Physical Platinum Shares ETF
+SLV,commodities,iShares Silver Trust - silver bullion
+UNG,commodities,United States Natural Gas Fund - natural gas futures
+USO,commodities,United States Oil Fund - WTI crude futures
+FXB,currency,Invesco CurrencyShares British Pound Sterling Trust
+FXE,currency,Invesco CurrencyShares Euro Trust
+FXY,currency,Invesco CurrencyShares Japanese Yen Trust
+UUP,currency,Invesco DB US Dollar Index Bullish Fund - long USD
+EEM,emerging_markets,iShares MSCI Emerging Markets ETF - broad EM
+EWW,emerging_markets,iShares MSCI Mexico ETF
+EWY,emerging_markets,iShares MSCI South Korea ETF
+EWZ,emerging_markets,iShares MSCI Brazil ETF
+EZA,emerging_markets,iShares MSCI South Africa ETF
+FXI,emerging_markets,iShares China Large-Cap ETF
+IEMG,emerging_markets,iShares Core MSCI Emerging Markets ETF
+INDA,emerging_markets,iShares MSCI India ETF
+MCHI,emerging_markets,iShares MSCI China ETF
+THD,emerging_markets,iShares MSCI Thailand ETF
+VWO,emerging_markets,Vanguard FTSE Emerging Markets ETF
+AGG,fixed_income,iShares Core U.S. Aggregate Bond ETF
+BIL,fixed_income,SPDR Bloomberg 1-3 Month T-Bill ETF - cash-like
+BND,fixed_income,Vanguard Total Bond Market ETF
+BNDX,fixed_income,Vanguard Total International Bond ETF (hedged)
+EMB,fixed_income,iShares J.P. Morgan USD Emerging Markets Bond ETF
+GOVT,fixed_income,iShares U.S. Treasury Bond ETF - broad Treasuries
+HYG,fixed_income,iShares iBoxx $ High Yield Corporate Bond ETF - junk bonds
+IEF,fixed_income,iShares 7-10 Year Treasury Bond ETF
+JNK,fixed_income,SPDR Bloomberg High Yield Bond ETF - junk bonds
+LQD,fixed_income,iShares iBoxx $ Investment Grade Corporate Bond ETF
+MUB,fixed_income,iShares National Muni Bond ETF
+SHY,fixed_income,iShares 1-3 Year Treasury Bond ETF - short duration
+TIP,fixed_income,iShares TIPS Bond ETF - inflation-protected Treasuries
+TLT,fixed_income,iShares 20+ Year Treasury Bond ETF - long duration
+VCSH,fixed_income,Vanguard Short-Term Corporate Bond ETF
+ACWI,international_developed,"iShares MSCI ACWI ETF - global, developed + EM"
+ACWX,international_developed,iShares MSCI ACWI ex U.S. ETF
+EFA,international_developed,iShares MSCI EAFE ETF - developed ex US/Canada
+EWA,international_developed,iShares MSCI Australia ETF
+EWC,international_developed,iShares MSCI Canada ETF
+EWG,international_developed,iShares MSCI Germany ETF
+EWH,international_developed,iShares MSCI Hong Kong ETF
+EWI,international_developed,iShares MSCI Italy ETF
+EWJ,international_developed,iShares MSCI Japan ETF
+EWL,international_developed,iShares MSCI Switzerland ETF
+EWN,international_developed,iShares MSCI Netherlands ETF
+EWP,international_developed,iShares MSCI Spain ETF
+EWQ,international_developed,iShares MSCI France ETF
+EWT,international_developed,iShares MSCI Taiwan ETF
+EWU,international_developed,iShares MSCI United Kingdom ETF
+IEFA,international_developed,iShares Core MSCI EAFE ETF
+VEA,international_developed,Vanguard FTSE Developed Markets ETF
+VGK,international_developed,Vanguard FTSE Europe ETF
+IBB,specialty,iShares Biotechnology ETF
+ITA,specialty,iShares U.S. Aerospace & Defense ETF
+ITB,specialty,iShares U.S. Home Construction ETF
+KRE,specialty,SPDR S&P Regional Banking ETF
+OIH,specialty,VanEck Oil Services ETF
+SMH,specialty,VanEck Semiconductor ETF
+SOXX,specialty,iShares Semiconductor ETF
+XBI,specialty,SPDR S&P Biotech ETF - equal-weighted biotech
+XME,specialty,SPDR S&P Metals & Mining ETF
+XRT,specialty,SPDR S&P Retail ETF
+DIA,us_equity_broad,SPDR Dow Jones Industrial Average ETF - 30 blue chips
+IJR,us_equity_broad,iShares Core S&P Small-Cap ETF - US small-cap
+IVE,us_equity_broad,iShares S&P 500 Value ETF - S&P 500 value slice
+IVW,us_equity_broad,iShares S&P 500 Growth ETF - S&P 500 growth slice
+IWM,us_equity_broad,iShares Russell 2000 ETF - US small-cap
+MDY,us_equity_broad,SPDR S&P MidCap 400 ETF - US mid-cap
+QQQ,us_equity_broad,Invesco QQQ Trust - Nasdaq-100
+RSP,us_equity_broad,"Invesco S&P 500 Equal Weight ETF - S&P 500, equal-weighted"
+SPY,us_equity_broad,SPDR S&P 500 ETF Trust - S&P 500
+VTI,us_equity_broad,Vanguard Total Stock Market ETF - whole US market
+DVY,us_equity_style,iShares Select Dividend ETF - high dividend yield
+MTUM,us_equity_style,iShares MSCI USA Momentum Factor ETF
+QUAL,us_equity_style,iShares MSCI USA Quality Factor ETF
+SCHD,us_equity_style,Schwab US Dividend Equity ETF
+SDY,us_equity_style,SPDR S&P Dividend ETF - dividend growth
+USMV,us_equity_style,iShares MSCI USA Min Vol Factor ETF - low volatility
+VIG,us_equity_style,Vanguard Dividend Appreciation ETF
+VLUE,us_equity_style,iShares MSCI USA Value Factor ETF
+VTV,us_equity_style,Vanguard Value ETF - US large-cap value
+VUG,us_equity_style,Vanguard Growth ETF - US large-cap growth
+IYR,us_sectors,iShares U.S. Real Estate ETF
+VNQ,us_sectors,Vanguard Real Estate ETF
+XLB,us_sectors,Materials Select Sector SPDR Fund
+XLC,us_sectors,Communication Services Select Sector SPDR Fund
+XLE,us_sectors,Energy Select Sector SPDR Fund
+XLF,us_sectors,Financial Select Sector SPDR Fund
+XLI,us_sectors,Industrial Select Sector SPDR Fund
+XLK,us_sectors,Technology Select Sector SPDR Fund
+XLP,us_sectors,Consumer Staples Select Sector SPDR Fund
+XLRE,us_sectors,Real Estate Select Sector SPDR Fund
+XLU,us_sectors,Utilities Select Sector SPDR Fund
+XLV,us_sectors,Health Care Select Sector SPDR Fund
+XLY,us_sectors,Consumer Discretionary Select Sector SPDR Fund
