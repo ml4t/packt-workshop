@@ -27,7 +27,7 @@ It's an **agent → aggregation → debate → supervisor** pipeline (the
 2. Runs a `SupervisorAgent` over multiple specialist research agents, each
    producing an independent probability estimate with cited reasoning.
 3. Aggregates disagreement, runs an adversarial debate phase when agents
-   diverge, and produces a single calibrated probability with a full,
+   diverge, and produces a single aggregated probability with a full,
    inspectable trace - not just a number.
 4. Persists the trace (see `forecast_traces/` in the book repo) so the
    reasoning is auditable after the fact, not just the output.

@@ -192,7 +192,7 @@ path and run metadata are in the file's own `provenance` key): every
 agent-generated number and piece of reasoning is kept verbatim, only the raw
 web search results each specialist queried along the way are dropped (third-
 party scraped content, not needed for the walkthrough, and the bulk of the
-original 114KB). See `docs/research_agent_demo.md` for why this segment
+original 114KB). See `docs/research_agent_walkthrough.md` for why this segment
 traces a frozen run instead of executing the pipeline live.
 
 ## License / attribution

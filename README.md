@@ -97,7 +97,7 @@ data/                  the free 100-ETF dataset, plus one bundled real agent tra
 docs/
   prerequisites.md     what you need before Saturday
   coding_agent_brief.md    the spec used in the live coding-agent build
-  research_agent_demo.md  why the forecasting-agent segment traces a real run instead of a live LLM call
+  research_agent_walkthrough.md  why the research-agent segment traces a real run instead of a live LLM call
 SETUP.md               uv / Docker / Colab, pick one
 ```
 
